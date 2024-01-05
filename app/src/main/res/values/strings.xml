@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">RouteContactsApp</string>
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="unblast">unblast</string>
+    <string name="_2_hrs">2 hrs.</string>
+    <string name="_1_share">1 share</string>
+    <string name="_12">12</string>
 </resources>
