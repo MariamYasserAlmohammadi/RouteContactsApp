@@ -8,30 +8,43 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 
- class ContactsRecyclerAdapter (val contacts:List<Contact>)
+ class ContactsRecyclerAdapter (val contacts:List<Contact>) // val mean new variable (object)
     :RecyclerView.Adapter<ContactsRecyclerAdapter.MyViewHolder>() {
+     // no val before itemView because parent class have public variable named itemView
      class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
          val image: ImageView = itemView.findViewById(R.id.imv_contact_item)
          val name: TextView = itemView.findViewById(R.id.tv_contact_item_name)
          val phone: TextView = itemView.findViewById(R.id.tv_contact_item_Phone)
+     fun bind(contact: Contact){
+         image.setImageResource(R.drawable.profile)
+         name.text = contact?.name
+         phone.text = contact?.phone
+     }
      }
 
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
-         val itemView =
-             LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
+         // any activity has life cycle
+         // adapter doesn't have context
+         // activity , fragment extends class context
+         // need context to now life cycle
+         // Rv extends ViewGroup extends View
+         // ViewGroup is RV
+         // View doesn't extends context
+         // parent is RV parent.context
+         // return type od inflate is view
+         // attach root ? we will attach orAdapter
+         // itemView is item_contact
+         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
          return MyViewHolder(itemView)
      }
 
      override fun getItemCount(): Int {
          return contacts?.size ?: 0
      }
-
+     // binding is  attach dtata with views
      override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
          val contact = contacts.get(position)
-         holder.image.setImageResource(R.drawable.profile)
-         holder.name.text = contact?.name
-         holder.phone.text = contact?.phone
+         holder.bind(contact)
          if (onContactClickListener!=null){
              holder.itemView.setOnClickListener{
                  onContactClickListener?.onContactClick(contact)
@@ -39,8 +52,7 @@ import androidx.recyclerview.widget.RecyclerView
              }
          }
      }
-
-
+     // refrence nullable (name :type) from interface مندوب
      var onContactClickListener:OnContactClickListener?=null
      fun interface OnContactClickListener {
          fun onContactClick(contact: Contact)

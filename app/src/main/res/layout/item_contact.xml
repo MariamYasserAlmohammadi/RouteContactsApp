@@ -7,15 +7,15 @@
 
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    android:backgroundTint="#FF9E2A22">
+    android:backgroundTint="@color/purple">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/imv_contact_item"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars"
@@ -28,7 +28,7 @@
             tools:text="Name"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/imv_contact_item"
             app:layout_constraintTop_toTopOf="@id/imv_contact_item"
@@ -42,7 +42,7 @@
             tools:text="Phone Number"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/imv_contact_item"
             app:layout_constraintTop_toBottomOf="@id/tv_contact_item_name"
