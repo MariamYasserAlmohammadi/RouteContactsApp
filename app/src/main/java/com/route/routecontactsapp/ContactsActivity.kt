@@ -11,8 +11,10 @@ import com.route.routecontactsapp.databinding.ActivityContactsBinding
 
 class ContactsActivity : AppCompatActivity() {
     lateinit var binding: ActivityContactsBinding
-    lateinit var contactsList: MutableList<Contact>
+    var contactsList= mutableListOf<Contact>()
     lateinit var adapter: ContactsRecyclerAdapter
+    var contactObj:Contact? =null
+
 
 
 
@@ -21,43 +23,39 @@ class ContactsActivity : AppCompatActivity() {
         binding = ActivityContactsBinding.inflate(layoutInflater)
         // constrain layout of RV
         setContentView(binding.root)
-        contactsList = mutableListOf()
-        val contact  =intent.parcelable<Contact>(Constants.contact)
-        contact?.let {
-                contact ->{
-            val name=contact.name
-            val phone=contact.phone
-            val description=contact.description
-            createContactsList(name ,phone,description)
-        }
-        }
+        extractParams()
         initRecyclerView()
 
 
+
+
+    }
+    private fun extractParams() {
+        contactObj = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(Constants.contact, Contact::class.java)
+        } else {
+            intent.getParcelableExtra<Contact>(Constants.contact) as Contact
+        }
     }
 
-    private fun createContactsList(name: String, phone: String, description: String) {
-
-        contactsList.add(Contact(name,phone, description))
+    private fun createContactsList(name: String?, phone: String?, description: String?) {
+        contactsList.add(Contact(name?:"",phone?:"", description?:"",contactObj?.image ?:R.drawable.profile))
     }
-    inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
-        Build.VERSION.SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
-    }
-
 
     private fun initRecyclerView() {
+        createContactsList(contactObj?.name ,contactObj?.phone,contactObj?.description)
 
         adapter = ContactsRecyclerAdapter(this.contactsList)
         binding.rvContactsItemsList.adapter = adapter
+        adapter.notifyItemInserted(contactsList.size-1)
         adapter.onContactClickListener =ContactsRecyclerAdapter.OnContactClickListener {
-            contact ->  navigateToContactDetailsActivity(contact)
+                contact,position ->  navigateToContactDetailsActivity(contact)
         }
         }
 
     private fun navigateToContactDetailsActivity(contact: Contact) {
         val intent = Intent(this,ContactDetailsActivity::class.java)
-        intent.putExtra("contact",contact)
+        intent.putExtra(Constants.contactDetails,contact)
         startActivity(intent)
     }
 

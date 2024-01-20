@@ -7,7 +7,7 @@
 
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    android:backgroundTint="@color/purple">
+    android:backgroundTint="@color/dark_purple">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:padding="16dp"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
+            tools:src="@drawable/profile"
 
             />
         <TextView

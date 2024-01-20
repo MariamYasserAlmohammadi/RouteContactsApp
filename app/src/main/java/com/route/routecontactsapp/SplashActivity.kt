@@ -9,6 +9,9 @@ class SplashActivity :  AppCompatActivity (){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        // object from handler // use mainLooper   //have many Looper
+        //postDelayed take 2 parameters
+        // looper class responsible for take tasks in mainThread and give it to cpu
         Handler(mainLooper).postDelayed(
             {
                 startContactsActivity()
@@ -17,7 +20,8 @@ class SplashActivity :  AppCompatActivity (){
     }
 
     private fun startContactsActivity() {
-        // كود مبني اساسا من جافا مش عايز object,  عايز بس يعرف حيروح فين reflection (name of class and in any package)
+        // :: reflections gives us informations about class
+        //  كود مبني اساسا من جافا مش عايز object,  عايز بس يعرف حيروح فين reflection (name of class and in any package)
      startActivity(Intent(this,MainActivity::class.java))
         finish()
 

@@ -18,16 +18,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnSave.setOnClickListener(
             {
-                if (!validateTextField()){
+                if (!validateTextFields()) {
+                    // assert only from this scoop
                     return@setOnClickListener
                 }
                 onSaveButtonClick()
-
-
             }
         )
 
@@ -37,31 +36,33 @@ class MainActivity : AppCompatActivity() {
         name = binding.edtName.text?.trim().toString()
         phone = binding.edtPhone.text?.trim().toString()
         description = binding.edtDescription.text?.trim().toString()
-        val contact = Contact(name, phone, description)
+        val contact = Contact(name, phone, description,R.drawable.profile)
         intent = Intent(this, ContactsActivity::class.java)
-        intent.putExtra("contact", contact)
+        intent.putExtra(Constants.contact, contact)
         startActivity(intent)
     }
 
-    fun validateTextField() : Boolean {
-         val name =binding.edtName.text?.trim().toString()
-         val phone =binding.edtName.text?.trim().toString()
-         binding.tilName.error =validateName(name)
-         binding.tilPhone.error =validatePhone(phone)
-         return (validateName(name)==null && validatePhone(phone) == null)
+    fun validateTextFields(): Boolean {
+        name = binding.edtName.text?.trim().toString()
+        phone = binding.edtName.text?.trim().toString()
+        binding.tilName.error = validateName(name)
+        binding.tilPhone.error = validatePhone(phone)
+        return (validateName(name) == null && validatePhone(phone) == null)
     }
-    fun validateName(name:String) :String?{
+
+    fun validateName(name: String): String? {
         if (name.isEmpty())
             return "Required"
-        if (name.trim().length<3)
-            return  "Name cant be less than 3 characters"
+        if (name.trim().length < 3)
+            return "Name cant be less than 3 characters"
         return null
     }
-    fun validatePhone(phone:String) :String?{
+
+    fun validatePhone(phone: String): String? {
         if (phone.isEmpty())
             return "Required"
-        if (phone.trim().length<3)
-            return  "Name cant be less than 11 digits"
+//        if (phone.trim().length < 11)
+//            return "Name cant be less than 11 digits"
         return null
 
     }

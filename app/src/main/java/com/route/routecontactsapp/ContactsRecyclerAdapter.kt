@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
     :RecyclerView.Adapter<ContactsRecyclerAdapter.MyViewHolder>() {
      // no val before itemView because parent class have public variable named itemView
      class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+         //generic fun in generic class
          val image: ImageView = itemView.findViewById(R.id.imv_contact_item)
          val name: TextView = itemView.findViewById(R.id.tv_contact_item_name)
          val phone: TextView = itemView.findViewById(R.id.tv_contact_item_Phone)
@@ -25,21 +26,22 @@ import androidx.recyclerview.widget.RecyclerView
      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
          // any activity has life cycle
          // adapter doesn't have context
-         // activity , fragment extends class context
-         // need context to now life cycle
+         // activity , fragments extends class context
+         // need context to know life cycle
          // Rv extends ViewGroup extends View
          // ViewGroup is RV
          // View doesn't extends context
          // parent is RV parent.context
-         // return type od inflate is view
-         // attach root ? we will attach orAdapter
+         // return type of inflate is view
+         // attach root ? we will attach or Adapter
          // itemView is item_contact
+         // holder is constrain layout of item view
          val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
          return MyViewHolder(itemView)
      }
 
      override fun getItemCount(): Int {
-         return contacts?.size ?: 0
+         return contacts?.size ?:0
      }
      // binding is  attach dtata with views
      override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -47,7 +49,7 @@ import androidx.recyclerview.widget.RecyclerView
          holder.bind(contact)
          if (onContactClickListener!=null){
              holder.itemView.setOnClickListener{
-                 onContactClickListener?.onContactClick(contact)
+                 onContactClickListener?.onContactClick(contact,position)
 
              }
          }
@@ -55,7 +57,7 @@ import androidx.recyclerview.widget.RecyclerView
      // refrence nullable (name :type) from interface مندوب
      var onContactClickListener:OnContactClickListener?=null
      fun interface OnContactClickListener {
-         fun onContactClick(contact: Contact)
+         fun onContactClick(contact: Contact ,position: Int)
 
      }
  }
